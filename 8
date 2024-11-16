@@ -1,0 +1,24 @@
+CHAT SERVER :
+
+boolean clientConnected = false;
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Chat server started. Waiting for clients...");
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    char incomingChar = Serial.read();
+	if (!clientConnected) {
+      Serial.println("Hello, client! You are now connected to the chat server.");
+      clientConnected = true;
+    }
+    
+   Serial.print("Client says: ");
+    Serial.println(incomingChar);
+
+    Serial.print("Server echo: ");
+    Serial.println(incomingChar);
+  }
+}
