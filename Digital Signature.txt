@@ -1,0 +1,27 @@
+// You are using Java
+import java.security.*;
+import java.util.Base64;
+import java.util.*;
+
+class Manga
+{
+    public static void main(String []args) throws Exception 
+    {
+        Scanner sc=new Scanner(System.in);
+        String msg=sc.nextLine();
+        
+        KeyPair kp=KeyPairGenerator.getInstance("DSA").generateKeyPair();
+        Signature sig=Signature.getInstance("SHA256withDSA");
+        
+        sig.initSign(kp.getPrivate());
+        sig.update(msg.getBytes());
+        
+        String encrypt=Base64.getEncoder().encodeToString(sig.sign());
+        
+        sig.initVerify(kp.getPublic());
+        sig.update(msg.getBytes());
+        
+        System.out.println("Digital Signature : "+encrypt);
+        System.out.println("Signature Verification result :"+sig.verify(Base64.getDecoder().decode(encrypt)));
+    }
+}
