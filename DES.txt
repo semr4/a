@@ -1,0 +1,24 @@
+import java.util.*;
+import javax.crypto.*;
+import java.util.Base64;
+class main{
+    public static void main(String ar[])
+    {
+        Scanner sc=new Scanner(System.in);
+        String txt=sc.nextLine();
+        try{
+            SecretKey key=KeyGenerator.getInstance("DES").generateKey();
+            Cipher cipher=Cipher.getInstance("DES");
+            cipher.init(Cipher.ENCRYPT_MODE,key);
+            String enc=Base64.getEncoder().encodeToString(cipher.doFinal(txt.getBytes()));
+            System.out.println("Encrypted: "+enc);
+            cipher.init(Cipher.DECRYPT_MODE,key);
+            String dec=new String(cipher.doFinal(Base64.getDecoder().decode(enc)));
+            System.out.println("Decrypted: "+dec);
+        }
+        catch(Exception e)
+        {
+            System.out.print(e.getMessage());
+        }
+    }
+}
