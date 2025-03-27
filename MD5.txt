@@ -1,0 +1,18 @@
+import java.util.*;
+import java.security.*;
+class main
+{
+    public static void main(String ar[]) throws Exception
+    {
+        Scanner sc=new Scanner(System.in);
+        String txt=sc.nextLine();
+        MessageDigest md=MessageDigest.getInstance("MD5");
+        byte[] digest=md.digest(txt.getBytes());
+        StringBuilder res=new StringBuilder();
+        for (byte b:digest)
+        {
+            res.append(String.format("%02x",b));
+        }
+        System.out.print(res.toString());
+    }
+}
