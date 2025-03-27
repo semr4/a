@@ -1,0 +1,45 @@
+2.Row Column Tranformation
+// You are using Java
+import java.util.*;
+class main
+{
+    public static void main(String ar[])
+    {
+        Scanner sc=new Scanner(System.in);
+        String s=sc.nextLine();
+        s=s.toUpperCase().replaceAll("[^A-Z]","");
+        int row=sc.nextInt();
+        int col=sc.nextInt();
+        
+        System.out.print(encrypt(s,row,col));
+        
+    }
+    public static String encrypt(String s,int n,int m)
+    {
+        char[][] mat=new char[n][m];
+        int ind=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(ind<s.length())
+                {
+                    mat[i][j]=s.charAt(ind++);
+                }
+                else{
+                    mat[i][j]='X';
+                }
+            }
+        }
+        StringBuilder res=new StringBuilder();
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int j=m-1;j>=0;j--)
+            {
+                res.append(mat[i][j]);
+            }
+        }
+        return res.toString();
+    }
+    
+}
