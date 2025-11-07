@@ -20,7 +20,7 @@ alert icmp any any -> any any (msg:"ICMP Ping Detected"; sid:1000001; rev:1;)
 sudo snort -T -c /etc/var/snort.lua
 
 #to run
-sudo snort -c /etc/snort/snort.lua -R /etc/snort/rules/local.rules -i wlan0 -A alert_fast
+sudo snort -c /etc/snort/snort.lua -R /etc/snort/rules/local.rules -i eth0 -A alert_fast
 
 #check
 ping -c 4 <target_ip>
