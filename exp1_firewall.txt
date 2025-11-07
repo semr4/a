@@ -1,0 +1,30 @@
+# Update package lists and install UFW
+sudo apt update
+sudo apt -y install ufw
+
+# Set safe defaults
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow SSH and web (change/remove if not needed)
+sudo ufw allow ssh
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
+# (Optional) Allow SSH only from a trusted IP — replace with your IP if needed
+# sudo ufw allow from 192.168.1.10 to any port 22 proto tcp
+
+# Enable UFW
+sudo ufw enable
+
+# Show status
+sudo ufw status verbose
+
+
+sudo ufw deny from 1.2.3.4
+
+sudo ufw deny from 1.2.3.4 to any port 80
+
+# This blocks all IPs from 1.2.3.0 to 1.2.3.255
+sudo ufw deny from 1.2.3.0/24
+

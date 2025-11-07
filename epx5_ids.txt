@@ -1,0 +1,27 @@
+sudo apt update
+sudo apt install snort -y
+
+ip a
+
+#Enable promiscuous mode (replace eth0 with your interface name, e.g., ens33 or wlan0):
+sudo ifconfig eth0 promisc
+
+#configuration
+sudo snort -T -c /etc/snort/snort.lua 
+
+# create/edit local rules (adjust path to rules dir shown in snort.lua)
+sudo mkdir -p /etc/snort/rules
+sudo nano /etc/snort/rules/local.rules
+
+# add: 
+alert icmp any any -> any any (msg:"ICMP Ping Detected"; sid:1000001; rev:1;)
+
+# test config & rules
+sudo snort -T -c /etc/var/snort.lua
+
+#to run
+sudo snort -c /etc/snort/snort.lua -R /etc/snort/rules/local.rules -i wlan0 -A alert_fast
+
+#check
+ping -c 4 <target_ip>
+

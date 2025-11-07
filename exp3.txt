@@ -1,0 +1,8 @@
+sudo apt update
+sudo apt install set -y
+sudo setoolkit
+
+1
+2
+3
+

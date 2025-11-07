@@ -1,0 +1,59 @@
+# 1. Update package lists and upgrade (optional but recommended)
+sudo apt update && sudo apt -y upgrade
+
+# 2. Install ClamAV and the daemon
+sudo apt -y install clamav clamav-daemon
+
+
+
+# 6. Verify clamscan is available and check version
+clamscan --version
+
+# 7. Run a recursive full system scan (shows only infected files; may take long)
+#    -r : recursive, --bell : beep on finding, -i : print only infected files
+sudo clamscan -r / --bell -i
+
+# 8. (Optional faster scan) Scan common system directories only
+# sudo clamscan -r /home /etc /var --bell -i
+
+# 9. Download the EICAR test file (method A: curl)
+curl -O https://secure.eicar.org/eicar.com.txt
+
+
+# 12. Scan the EICAR file to confirm detection
+clamscan eicar.com.txt
+
+# 13. Remove the detected (test) file automatically (if detection succeeded)
+clamscan --remove eicar.com.txt || sudo clamscan --remove eicar.com.txt
+
+# 14. View ClamAV logs (typical location)
+sudo cat /var/log/clamav/clamav.log
+
+# 15. (Optional) If using systemd journal instead of log file
+sudo journalctl -u clamav-daemon --no-pager | tail -n 50
+
+# 16. (Optional) Re-run a quick targeted scan of a directory (example: /tmp)
+sudo clamscan -r /tmp --bell -i
+
+# 17. (Optional) Reset/clean up: uninstall ClamAV (if you want to remove it)
+# sudo systemctl stop clamav-daemon clamav-freshclam
+# sudo apt -y remove --purge clamav clamav-daemon
+# sudo apt -y autoremove
+
+
+------------------------------------------
+# 3. Stop the daemon briefly (so freshclam can update safely)
+sudo systemctl stop clamav-freshclam
+sudo systemctl stop clamav-daemon
+
+# 4. Update virus definitions (signature DB)
+sudo freshclam
+
+# 5. Start (or restart) the services again
+sudo systemctl start clamav-freshclam
+sudo systemctl start clamav-daemon
+
+
+# 10. If curl is not available, create EICAR file locally (method B: echo)
+# Note: this writes the standard EICAR test string into eicar.com.txt
+echo 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*' > eicar.com.txt
